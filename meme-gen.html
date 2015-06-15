@@ -1,0 +1,101 @@
+<link rel="import" href="../polymer/polymer.html">
+
+<!--
+An element providing a solution to no problem in particular.
+
+Example:
+
+    <meme-gen></meme-gen>
+
+@element meme-gen
+@demo demo/index.html
+-->
+<dom-module id="meme-gen">
+
+  <style>
+    :host {
+      display: block;
+      box-sizing: border-box;
+    }
+
+    .wrapper {
+      position: relative;
+    }
+
+    #image {
+      max-height: 400px;
+      max-width: 590px;
+      z-index: 1;
+    }
+    
+    #top, #bottom {
+      color: white;
+      font-family: Impact, Haettenschweiler, 'Franklin Gothic Bold', Charcoal, 'Helvetica Inserat', 'Bitstream Vera Sans Bold', 'Arial Black', 'sans serif';
+      font-size: 30px;
+      position: absolute;
+      text-align: center;
+      text-shadow: 1px 1px 2px black;
+      width: 100%;
+    }
+    
+    #top {
+      top: 5px;
+    }
+    
+    #bottom {
+      bottom: 5px;
+    }
+  </style>
+
+  <template>
+    <div class="wrapper">
+      <img id="image" on-load="refreshSizes_"></img>
+      <div id="top">{{toCaps_(top)}}</div>
+      <div id="bottom">{{toCaps_(bottom)}}</div>
+    </div>
+  </template>
+
+</dom-module>
+
+<script>
+
+  Polymer({
+
+    is: 'meme-gen',
+
+    properties: {
+
+      template: {
+        type: String,
+        value: 'First-World-Problems',
+        observer: 'onTemplateChanged_',
+      },
+      
+      top: String,
+
+      bottom: String
+    },
+    
+    refreshSizes_: function() {
+      var newWidth = this.$.image.getBoundingClientRect().width;
+      this.$.top.style.width = newWidth;
+      this.$.bottom.style.width = newWidth;
+    },
+    
+    toCaps_: function(str) {
+      return str.toUpperCase();
+    },
+
+    onTemplateChanged_: function(newTemplate) {
+      this.$.image.src = 'https://imgflip.com/s/meme/' + this.fixCase_(newTemplate) + '.jpg';
+    },
+    
+    fixCase_: function(src) {
+      return src.toLowerCase().split('-').map(function(piece) {
+        return piece.charAt(0).toUpperCase() + piece.slice(1);
+      }).join('-');
+    },
+
+  });
+
+</script>

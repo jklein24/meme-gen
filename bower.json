@@ -1,0 +1,23 @@
+{
+  "name": "meme-gen",
+  "version": "1.0.0",
+  "authors": [
+    "Jeremy Klein"
+  ],
+  "description": "An element providing a solution to no problem in particular.",
+  "main": "meme-gen.html",
+  "license": "LICENSEt",
+  "homepage": "https://github.com/jlklein/meme-gen/",
+  "ignore": [
+    "/.*",
+    "/test/",
+    "/demo/"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#^1.0.0"
+  },
+  "devDependencies": {
+    "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
+    "web-component-tester": "*"
+  }
+}
