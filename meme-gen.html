@@ -5,7 +5,8 @@ An element providing a solution to no problem in particular.
 
 Example:
 
-    <meme-gen></meme-gen>
+    <meme-gen template="success-kid" bottom="Made great meme element">
+    </meme-gen>
 
 @element meme-gen
 @demo demo/index.html
@@ -66,14 +67,23 @@ Example:
 
     properties: {
 
+      /**
+       * The template to use in the form 'y-u-no'.
+       */
       template: {
         type: String,
         value: 'First-World-Problems',
         observer: 'onTemplateChanged_',
       },
-      
+
+      /**
+       * The text at the top of the meme.
+       */
       top: String,
 
+      /**
+       * The text at the top of the meme.
+       */
       bottom: String,
       
       error_: Boolean,
