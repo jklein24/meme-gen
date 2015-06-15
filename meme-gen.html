@@ -28,7 +28,7 @@ Example:
       z-index: 1;
     }
     
-    #top, #bottom {
+    #top, #bottom, #error {
       color: white;
       font-family: Impact, Haettenschweiler, 'Franklin Gothic Bold', Charcoal, 'Helvetica Inserat', 'Bitstream Vera Sans Bold', 'Arial Black', 'sans serif';
       font-size: 30px;
@@ -38,7 +38,7 @@ Example:
       width: 100%;
     }
     
-    #top {
+    #top, #error {
       top: 5px;
     }
     
@@ -49,9 +49,10 @@ Example:
 
   <template>
     <div class="wrapper">
-      <img id="image" on-load="refreshSizes_"></img>
-      <div id="top">{{toCaps_(top)}}</div>
-      <div id="bottom">{{toCaps_(bottom)}}</div>
+      <img id="image" on-load="refreshSizes_" on-error="imageError_"></img>
+      <div hidden$="[[!error_]]" id="error">Invalid meme template!</div>
+      <div hidden$="[[error_]]" id="top">{{toCaps_(top)}}</div>
+      <div hidden$="[[error_]]" id="bottom">{{toCaps_(bottom)}}</div>
     </div>
   </template>
 
@@ -73,13 +74,27 @@ Example:
       
       top: String,
 
-      bottom: String
+      bottom: String,
+      
+      error_: Boolean,
     },
     
     refreshSizes_: function() {
+      if (this.loadingErrorTemplate_) {
+        this.loadingErrorTemplate_ = false;
+      } else {
+        this.error_ = false;
+      }
       var newWidth = this.$.image.getBoundingClientRect().width;
+      this.$.error.style.width = newWidth;
       this.$.top.style.width = newWidth;
       this.$.bottom.style.width = newWidth;
+    },
+    
+    imageError_: function() {
+      this.error_ = true;
+      this.loadingErrorTemplate_ = true;
+      this.template = 'computer-guy-facepalm';
     },
     
     toCaps_: function(str) {
